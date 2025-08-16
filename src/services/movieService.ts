@@ -10,11 +10,17 @@ axios.defaults.headers.common['accept'] = 'application/json';
 
 interface DBRespons {
   results: Movie[];
+  page: number;
+  total_pages: number;
 }
 
-export const getMovies = async (query: string): Promise<Movie[]> => {
+export const getMovies = async (
+  query: string,
+  page: number
+): Promise<DBRespons> => {
   const { data } = await axios.get<DBRespons>(`search/movie`, {
-    params: { query },
+    params: { query, page },
   });
-  return data.results;
+
+  return data;
 };
